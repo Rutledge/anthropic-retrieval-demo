@@ -1,1 +1,2 @@
 scorecard-ai==2.0.0a3
+openai==1.78.0
