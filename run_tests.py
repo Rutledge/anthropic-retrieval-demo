@@ -4,15 +4,17 @@ from typing import Any
 
 from scorecard_ai import Scorecard
 from scorecard_ai.lib import run_and_evaluate
+from openai import OpenAI
 
 
 def run_system(system_input: dict[str, Any]) -> dict:
-    """
-    FIXME: Replace this placeholder function with a call to your model
-    """
-    return {
-        "response": f"Placeholder LLM response, got input: {system_input}",
-    }
+    openai = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+    response = openai.responses.create(
+        model="gpt-4o-mini",
+        instructions=f"You are a tone translator that converts a user's message to a different tone ({system_input.get('tone')})",
+        input=system_input.get("original", ""),
+    )
+    return {"rewritten": response.output_text}
 
 
 def main(
